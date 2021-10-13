@@ -4,6 +4,7 @@ public class Board {
     private final String[] board = new String[9];
 
     public void displayBoard(){
+        System.out.println("\n");
         System.out.println(getBoardValue(0)+" | "+getBoardValue(1)+" | "+getBoardValue(2)+"   (1)|(2)|(3)");
         System.out.println("---------   -----------");
         System.out.println(getBoardValue(3)+" | "+getBoardValue(4)+" | "+getBoardValue(5)+"   (4)|(5)|(6)");
@@ -22,7 +23,19 @@ public class Board {
     public String[] getBoard() {
         return board;
     }
+
     public void updateBoardValue(int position, String value){
         board[position] = value;
+    }
+
+    public boolean checkIfBoardFull(){
+        boolean full = true;
+        for (String i:board){
+            if (i == null) {
+                full = false;
+                break;
+            }
+        }
+        return full;
     }
 }

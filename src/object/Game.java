@@ -1,7 +1,6 @@
 package object;
 
 import java.util.Scanner;
-import java.util.concurrent.TimeUnit;
 
 public class Game {
     private final Board board;
@@ -9,6 +8,7 @@ public class Game {
     private final Player player1;
     private final Player player2;
     private boolean player1GoesFirst;
+    private boolean end;
 
     public Game(Board board, Scanner scanner, Player player1, Player player2) {
         this.board = board;
@@ -18,7 +18,7 @@ public class Game {
     }
 
     private void choseCharacter() {
-        System.out.println("Chose your Character:");
+        System.out.println("Chose your Character(X/O):");
         String character = scanner.nextLine();
         if (!character.equals("x") && !character.equals("X") && !character.equals("o") && !character.equals("O")) {
             choseCharacter();
@@ -34,43 +34,48 @@ public class Game {
                 this.player1GoesFirst = false;
                 System.out.println("Player 1 = O\nPlayer 2 = X");
             }
-            try {
-                TimeUnit.SECONDS.sleep(1);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-
+//            try {
+//                TimeUnit.SECONDS.sleep(1);
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
         }
     }
 
-
     public void start() {
         choseCharacter();
-        while (!playerHasWon()) {
+        board.displayBoard();
+        while (!end) {
             startNewRound();
         }
         scanner.close();
     }
 
     private void startNewRound() {
-        //clearTerminal();
-        board.displayBoard();
+//        clearTerminal();
         if (player1GoesFirst) {
             letPlayerTakeTurn(player1);
-            letPlayerTakeTurn(player2);
+            if (!checkGameStatus()) {
+                letPlayerTakeTurn(player2);
+                checkGameStatus();
+            }
         } else {
             letPlayerTakeTurn(player2);
-            letPlayerTakeTurn(player1);
+            if (!checkGameStatus()) {
+                letPlayerTakeTurn(player1);
+                checkGameStatus();
+            }
         }
     }
 
     private void letPlayerTakeTurn(Player player) {
-        int wantedPosition = player.takeTurn() - 1;
+        int wantedPosition = player.takeTurn()-1;
         if (board.getBoard()[wantedPosition] != null) {
             letPlayerTakeTurn(player);
         } else {
             board.updateBoardValue(wantedPosition, player.getCharacter());
         }
+        board.displayBoard();
     }
 
     private void clearTerminal() {
@@ -86,9 +91,47 @@ public class Game {
         }
     }
 
-    private boolean playerHasWon() {
-        // TODO
+    private boolean checkIfPlayerWon() {
+        String[] topRow = {board.getBoardValue(0), board.getBoardValue(1), board.getBoardValue(2)};
+        String[] midRow = {board.getBoardValue(3), board.getBoardValue(4), board.getBoardValue(5)};
+        String[] bottomRow = {board.getBoardValue(6), board.getBoardValue(7), board.getBoardValue(8)};
+        String[] leftColumn = {board.getBoardValue(0), board.getBoardValue(3), board.getBoardValue(6)};
+        String[] middleColumn = {board.getBoardValue(1), board.getBoardValue(4), board.getBoardValue(7)};
+        String[] rightColumn = {board.getBoardValue(2), board.getBoardValue(5), board.getBoardValue(8)};
+        String[] descendingDiagonal = {board.getBoardValue(0), board.getBoardValue(4), board.getBoardValue(8)};
+        String[] ascendingDiagonal = {board.getBoardValue(6), board.getBoardValue(4), board.getBoardValue(2)};
+        String[][] winningPatterns = {topRow, midRow, bottomRow, leftColumn, middleColumn, rightColumn, descendingDiagonal, ascendingDiagonal};
+        String player1Char = player1.getCharacter();
+        String player2Char = player2.getCharacter();
+        for (String[] pattern : winningPatterns) {
+            if (pattern[0].equals(player1Char) && pattern[1].equals(player1Char) && pattern[2].equals(player1Char)) {
+                end = true;
+                System.out.println(player1Char + " has won!");
+                return true;
+            }
+            if (pattern[0].equals(player2Char) && pattern[1].equals(player2Char) && pattern[2].equals(player2Char)) {
+                end = true;
+                System.out.println(player2Char + " has won!");
+                return true;
+            }
+        }
         return false;
     }
 
+    private boolean checkTie(){
+        if(!checkIfPlayerWon() && board.checkIfBoardFull()){
+            end = true;
+            System.out.println("\nIt's a tie!");
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    private boolean checkGameStatus(){
+        if(!checkTie()){
+            return checkIfPlayerWon();
+        }
+        return false;
+    }
 }
