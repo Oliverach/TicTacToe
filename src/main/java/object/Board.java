@@ -1,7 +1,7 @@
 package object;
 
 public class Board {
-    private final String[] board = new String[9];
+    private String[] board = new String[9];
 
     public void displayBoard(){
         System.out.println("\n");
@@ -38,4 +38,9 @@ public class Board {
         }
         return full;
     }
+
+    public void setBoard(String[] board){
+        this.board = board;
+    }
+
 }

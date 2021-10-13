@@ -1,8 +1,5 @@
-import object.Board;
-import object.Game;
-import object.Player;
-
 import java.util.Scanner;
+import object.*;
 
 public class Main {
     public static void main(String[] args) {

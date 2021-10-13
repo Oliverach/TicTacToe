@@ -1,5 +1,4 @@
 package object;
-
 import java.util.Scanner;
 
 public class Game {
@@ -16,6 +15,7 @@ public class Game {
         this.player1 = player1;
         this.player2 = player2;
     }
+
 
     private void choseCharacter() {
         System.out.println("Chose your Character(X/O):");
@@ -34,11 +34,6 @@ public class Game {
                 this.player1GoesFirst = false;
                 System.out.println("Player 1 = O\nPlayer 2 = X");
             }
-//            try {
-//                TimeUnit.SECONDS.sleep(1);
-//            } catch (InterruptedException e) {
-//                e.printStackTrace();
-//            }
         }
     }
 
@@ -91,7 +86,7 @@ public class Game {
         }
     }
 
-    private boolean checkIfPlayerWon() {
+    public boolean checkIfPlayerWon() {
         String[] topRow = {board.getBoardValue(0), board.getBoardValue(1), board.getBoardValue(2)};
         String[] midRow = {board.getBoardValue(3), board.getBoardValue(4), board.getBoardValue(5)};
         String[] bottomRow = {board.getBoardValue(6), board.getBoardValue(7), board.getBoardValue(8)};
@@ -118,20 +113,49 @@ public class Game {
         return false;
     }
 
-    private boolean checkTie(){
-        if(!checkIfPlayerWon() && board.checkIfBoardFull()){
-            end = true;
-            System.out.println("\nIt's a tie!");
-            return true;
-        }else{
+    public boolean checkGameStatus(){
+
+        if(!checkIfPlayerWon()){
+            if(board.checkIfBoardFull()){
+                end = true;
+                System.out.println("\nIt's a tie!");
+                return true;
+            }
             return false;
+        } else{
+            return true;
         }
     }
 
-    private boolean checkGameStatus(){
-        if(!checkTie()){
-            return checkIfPlayerWon();
-        }
-        return false;
+    public Board getBoard() {
+        return board;
+    }
+
+    public Scanner getScanner() {
+        return scanner;
+    }
+
+    public Player getPlayer1() {
+        return player1;
+    }
+
+    public Player getPlayer2() {
+        return player2;
+    }
+
+    public boolean isPlayer1GoesFirst() {
+        return player1GoesFirst;
+    }
+
+    public void setPlayer1GoesFirst(boolean player1GoesFirst) {
+        this.player1GoesFirst = player1GoesFirst;
+    }
+
+    public boolean isEnd() {
+        return end;
+    }
+
+    public void setEnd(boolean end) {
+        this.end = end;
     }
 }
