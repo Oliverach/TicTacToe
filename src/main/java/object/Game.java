@@ -1,6 +1,10 @@
 package object;
+
 import java.util.Scanner;
 
+/**
+ * The type Game.
+ */
 public class Game {
     private final Board board;
     private final Scanner scanner;
@@ -9,13 +13,20 @@ public class Game {
     private boolean player1GoesFirst;
     private boolean end;
 
+    /**
+     * Instantiates a new Game.
+     *
+     * @param board   the board
+     * @param scanner the scanner
+     * @param player1 the player 1
+     * @param player2 the player 2
+     */
     public Game(Board board, Scanner scanner, Player player1, Player player2) {
         this.board = board;
         this.scanner = scanner;
         this.player1 = player1;
         this.player2 = player2;
     }
-
 
     private void choseCharacter() {
         System.out.println("Chose your Character(X/O):");
@@ -37,6 +48,9 @@ public class Game {
         }
     }
 
+    /**
+     * Start.
+     */
     public void start() {
         choseCharacter();
         board.displayBoard();
@@ -47,7 +61,6 @@ public class Game {
     }
 
     private void startNewRound() {
-//        clearTerminal();
         if (player1GoesFirst) {
             letPlayerTakeTurn(player1);
             if (!checkGameStatus()) {
@@ -64,7 +77,7 @@ public class Game {
     }
 
     private void letPlayerTakeTurn(Player player) {
-        int wantedPosition = player.takeTurn()-1;
+        int wantedPosition = player.takeTurn() - 1;
         if (board.getBoard()[wantedPosition] != null) {
             letPlayerTakeTurn(player);
         } else {
@@ -73,19 +86,11 @@ public class Game {
         board.displayBoard();
     }
 
-    private void clearTerminal() {
-        try {
-            final String os = System.getProperty("os.name");
-            if (os.contains("Windows")) {
-                Runtime.getRuntime().exec("cls");
-            } else {
-                Runtime.getRuntime().exec("clear");
-            }
-        } catch (final Exception e) {
-            e.printStackTrace();
-        }
-    }
-
+    /**
+     * Check if player won boolean.
+     *
+     * @return the boolean
+     */
     public boolean checkIfPlayerWon() {
         String[] topRow = {board.getBoardValue(0), board.getBoardValue(1), board.getBoardValue(2)};
         String[] midRow = {board.getBoardValue(3), board.getBoardValue(4), board.getBoardValue(5)};
@@ -113,49 +118,49 @@ public class Game {
         return false;
     }
 
-    public boolean checkGameStatus(){
+    /**
+     * Check game status boolean.
+     *
+     * @return the boolean
+     */
+    public boolean checkGameStatus() {
 
-        if(!checkIfPlayerWon()){
-            if(board.checkIfBoardFull()){
+        if (!checkIfPlayerWon()) {
+            if (board.checkIfBoardFull()) {
                 end = true;
                 System.out.println("\nIt's a tie!");
                 return true;
             }
             return false;
-        } else{
+        } else {
             return true;
         }
     }
 
+    /**
+     * Gets board.
+     *
+     * @return the board
+     */
     public Board getBoard() {
         return board;
     }
 
-    public Scanner getScanner() {
-        return scanner;
-    }
-
+    /**
+     * Gets player 1.
+     *
+     * @return the player 1
+     */
     public Player getPlayer1() {
         return player1;
     }
 
+    /**
+     * Gets player 2.
+     *
+     * @return the player 2
+     */
     public Player getPlayer2() {
         return player2;
-    }
-
-    public boolean isPlayer1GoesFirst() {
-        return player1GoesFirst;
-    }
-
-    public void setPlayer1GoesFirst(boolean player1GoesFirst) {
-        this.player1GoesFirst = player1GoesFirst;
-    }
-
-    public boolean isEnd() {
-        return end;
-    }
-
-    public void setEnd(boolean end) {
-        this.end = end;
     }
 }
