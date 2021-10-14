@@ -1,32 +1,21 @@
 package object;
 
 import exception.InvalidNumberException;
+import exception.PositionUnavailableException;
 
 import java.util.Scanner;
 
-/**
- * The type Player.
- */
-public class Player {
+public class Player implements IPlayer{
     private String character;
     private final Scanner scanner;
 
-    /**
-     * Instantiates a new Player.
-     *
-     * @param scanner the scanner
-     */
     public Player(Scanner scanner){
         this.scanner = scanner;
     }
 
-    /**
-     * Take turn int.
-     *
-     * @return the int
-     */
-    public int takeTurn(){
 
+    @Override
+    public int takeTurn(String[] board){
         int position = 0;
         boolean valid = false;
         do{
@@ -34,33 +23,30 @@ public class Player {
                 System.out.println("\nChose position to place your character("+character+"): ");
                 position = Integer.parseInt(scanner.nextLine());
                 if(position > 0 && position <= 9){
-                    valid = true;
+                    if (board[position-1] == null) {
+
+                        valid = true;
+                    } else {
+                        throw new PositionUnavailableException();
+                    }
+
                 } else{
                     throw new InvalidNumberException();
                 }
             }catch (NumberFormatException e){
                 System.out.println("(Invalid Input)");
-            }catch (InvalidNumberException e) {
+            }catch (InvalidNumberException | PositionUnavailableException e) {
                 System.out.println(e.getMessage());
             }
         }while(!valid);
-        return position;
+        return position-1;
     }
 
-    /**
-     * Sets character.
-     *
-     * @param character the character
-     */
+
     public void setCharacter(String character) {
         this.character = character;
     }
 
-    /**
-     * Gets character.
-     *
-     * @return the character
-     */
     public String getCharacter() {
         return character;
     }

@@ -2,26 +2,15 @@ package object;
 
 import java.util.Scanner;
 
-/**
- * The type Game.
- */
 public class Game {
     private final Board board;
     private final Scanner scanner;
-    private final Player player1;
-    private final Player player2;
+    private final IPlayer player1;
+    private final IPlayer player2;
     private boolean player1GoesFirst;
     private boolean end;
 
-    /**
-     * Instantiates a new Game.
-     *
-     * @param board   the board
-     * @param scanner the scanner
-     * @param player1 the player 1
-     * @param player2 the player 2
-     */
-    public Game(Board board, Scanner scanner, Player player1, Player player2) {
+    public Game(Board board, Scanner scanner, IPlayer player1, IPlayer player2) {
         this.board = board;
         this.scanner = scanner;
         this.player1 = player1;
@@ -48,9 +37,6 @@ public class Game {
         }
     }
 
-    /**
-     * Start.
-     */
     public void start() {
         choseCharacter();
         board.displayBoard();
@@ -76,21 +62,12 @@ public class Game {
         }
     }
 
-    private void letPlayerTakeTurn(Player player) {
-        int wantedPosition = player.takeTurn() - 1;
-        if (board.getBoard()[wantedPosition] != null) {
-            letPlayerTakeTurn(player);
-        } else {
-            board.updateBoardValue(wantedPosition, player.getCharacter());
-        }
+    private void letPlayerTakeTurn(IPlayer player) {
+        int wantedPosition = player.takeTurn(board.getBoard());
+        board.updateBoardValue(wantedPosition, player.getCharacter());
         board.displayBoard();
     }
 
-    /**
-     * Check if player won boolean.
-     *
-     * @return the boolean
-     */
     public boolean checkIfPlayerWon() {
         String[] topRow = {board.getBoardValue(0), board.getBoardValue(1), board.getBoardValue(2)};
         String[] midRow = {board.getBoardValue(3), board.getBoardValue(4), board.getBoardValue(5)};
@@ -118,11 +95,6 @@ public class Game {
         return false;
     }
 
-    /**
-     * Check game status boolean.
-     *
-     * @return the boolean
-     */
     public boolean checkGameStatus() {
 
         if (!checkIfPlayerWon()) {
@@ -137,30 +109,15 @@ public class Game {
         }
     }
 
-    /**
-     * Gets board.
-     *
-     * @return the board
-     */
     public Board getBoard() {
         return board;
     }
 
-    /**
-     * Gets player 1.
-     *
-     * @return the player 1
-     */
-    public Player getPlayer1() {
+    public IPlayer getPlayer1() {
         return player1;
     }
 
-    /**
-     * Gets player 2.
-     *
-     * @return the player 2
-     */
-    public Player getPlayer2() {
+    public IPlayer getPlayer2() {
         return player2;
     }
 }
