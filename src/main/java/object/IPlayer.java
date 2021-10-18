@@ -2,7 +2,7 @@ package object;
 
 public interface IPlayer {
 
-    int takeTurn(String[] board);
+    int takeTurn(String[] board) throws InterruptedException;
 
     void setCharacter(String character);
 

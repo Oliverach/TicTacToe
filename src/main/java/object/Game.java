@@ -37,7 +37,7 @@ public class Game {
         }
     }
 
-    public void start() {
+    public void start() throws InterruptedException {
         choseCharacter();
         board.displayBoard();
         while (!end) {
@@ -46,7 +46,7 @@ public class Game {
         scanner.close();
     }
 
-    private void startNewRound() {
+    private void startNewRound() throws InterruptedException {
         if (player1GoesFirst) {
             letPlayerTakeTurn(player1);
             if (!checkGameStatus()) {
@@ -62,7 +62,7 @@ public class Game {
         }
     }
 
-    private void letPlayerTakeTurn(IPlayer player) {
+    private void letPlayerTakeTurn(IPlayer player) throws InterruptedException {
         int wantedPosition = player.takeTurn(board.getBoard());
         board.updateBoardValue(wantedPosition, player.getCharacter());
         board.displayBoard();

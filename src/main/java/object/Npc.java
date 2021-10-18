@@ -1,6 +1,7 @@
 package object;
 
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
 public class Npc implements IPlayer {
 
@@ -8,7 +9,7 @@ public class Npc implements IPlayer {
 
 
     @Override
-    public int takeTurn(String[] board) {
+    public int takeTurn(String[] board) throws InterruptedException {
         System.out.println("NPC choosing position...");
         int[] topRow = {0, 1, 2};
         int[] midRow = {3, 4, 5};
@@ -58,6 +59,12 @@ public class Npc implements IPlayer {
         while (board[randNumb] != null){
             randNumb = rand.nextInt(9);
         }
+        try{
+            TimeUnit.SECONDS.sleep(1);
+        }catch (InterruptedException e){
+            System.out.println(e.getMessage());
+        }
+
         return randNumb;
     }
 
