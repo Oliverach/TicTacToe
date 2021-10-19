@@ -9,7 +9,7 @@ public class Npc implements IPlayer {
 
 
     @Override
-    public int takeTurn(String[] board) throws InterruptedException {
+    public int takeTurn(String[] board) {
         System.out.println("NPC choosing position...");
         int[] topRow = {0, 1, 2};
         int[] midRow = {3, 4, 5};
@@ -20,6 +20,10 @@ public class Npc implements IPlayer {
         int[] descendingDiagonal = {0, 4, 8};
         int[] ascendingDiagonal = {6, 4, 2};
         int[][] allPattern = {topRow, midRow, bottomRow, leftColumn, middleColumn, rightColumn, descendingDiagonal, ascendingDiagonal};
+
+        if(board[4] == null){
+            return 4;
+        }
 
         for (int[] pattern: allPattern){
             int counter = 0;
@@ -52,7 +56,6 @@ public class Npc implements IPlayer {
                 }
             }
         }
-
 
         Random rand = new Random();
         int randNumb = rand.nextInt(9);
