@@ -1,5 +1,8 @@
 package object;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Scanner;
 
 public class Game {
@@ -44,7 +47,26 @@ public class Game {
             startNewRound();
         }
         scanner.close();
+
     }
+
+    private void saveWinnerToFile(String winnerChar){
+        try {
+            String path = "winner.txt";
+            File myObj = new File(path);
+            if (myObj.createNewFile()) {
+                System.out.println("File created: " + myObj.getName());
+            } else {
+                System.out.println("File already exists.");
+            }
+            FileWriter myWriter = new FileWriter(path);
+            myWriter.write(winnerChar);
+            myWriter.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     private void startNewRound() throws InterruptedException {
         if (player1GoesFirst) {
@@ -83,11 +105,13 @@ public class Game {
         for (String[] pattern : winningPatterns) {
             if (pattern[0].equals(player1Char) && pattern[1].equals(player1Char) && pattern[2].equals(player1Char)) {
                 end = true;
+                saveWinnerToFile(player1Char);
                 System.out.println(player1Char + " has won!");
                 return true;
             }
             if (pattern[0].equals(player2Char) && pattern[1].equals(player2Char) && pattern[2].equals(player2Char)) {
                 end = true;
+                saveWinnerToFile(player2Char);
                 System.out.println(player2Char + " has won!");
                 return true;
             }
