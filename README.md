@@ -4,6 +4,6 @@
 
 ![Class Diagram](/doc/cd.jpg)
 
-![Sequence Diagram](/doc/sd.jpg)
+![Sequence Diagram](/doc/sd.png)
 
 ![Usecases](/doc/usecase.jpg)
