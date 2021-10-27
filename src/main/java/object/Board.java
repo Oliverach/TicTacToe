@@ -1,7 +1,11 @@
 package object;
 
 public class Board {
-    private String[] board = new String[9];
+    private String[] board;
+
+    public Board(){
+        board = new String[9];
+    }
 
     public void displayBoard(){
         System.out.println("\n");
