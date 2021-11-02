@@ -5,10 +5,18 @@ import exception.PositionUnavailableException;
 
 import java.util.Scanner;
 
+/**
+ * The type Player.
+ */
 public class Player implements IPlayer{
     private String character;
     private final Scanner scanner;
 
+    /**
+     * Instantiates a new Player.
+     *
+     * @param scanner the scanner
+     */
     public Player(Scanner scanner){
         this.scanner = scanner;
     }

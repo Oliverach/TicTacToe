@@ -5,6 +5,9 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
 
+/**
+ * The type Game.
+ */
 public class Game {
     private final Board board;
     private final Scanner scanner;
@@ -13,6 +16,14 @@ public class Game {
     private boolean player1GoesFirst;
     private boolean end;
 
+    /**
+     * Instantiates a new Game.
+     *
+     * @param board   the board
+     * @param scanner the scanner
+     * @param player1 the player 1
+     * @param player2 the player 2
+     */
     public Game(Board board, Scanner scanner, IPlayer player1, IPlayer player2) {
         this.board = board;
         this.scanner = scanner;
@@ -40,6 +51,11 @@ public class Game {
         }
     }
 
+    /**
+     * Start.
+     *
+     * @throws InterruptedException the interrupted exception
+     */
     public void start() throws InterruptedException {
         choseCharacter();
         board.displayBoard();
@@ -90,6 +106,11 @@ public class Game {
         board.displayBoard();
     }
 
+    /**
+     * Check if player won boolean.
+     *
+     * @return the boolean
+     */
     public boolean checkIfPlayerWon() {
         String[] topRow = {board.getBoardValue(0), board.getBoardValue(1), board.getBoardValue(2)};
         String[] midRow = {board.getBoardValue(3), board.getBoardValue(4), board.getBoardValue(5)};
@@ -119,6 +140,11 @@ public class Game {
         return false;
     }
 
+    /**
+     * Check game status boolean.
+     *
+     * @return the boolean
+     */
     public boolean checkGameStatus() {
 
         if (!checkIfPlayerWon()) {
@@ -133,14 +159,29 @@ public class Game {
         }
     }
 
+    /**
+     * Gets board.
+     *
+     * @return the board
+     */
     public Board getBoard() {
         return board;
     }
 
+    /**
+     * Gets player 1.
+     *
+     * @return the player 1
+     */
     public IPlayer getPlayer1() {
         return player1;
     }
 
+    /**
+     * Gets player 2.
+     *
+     * @return the player 2
+     */
     public IPlayer getPlayer2() {
         return player2;
     }

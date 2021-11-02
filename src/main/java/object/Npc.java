@@ -3,6 +3,9 @@ package object;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * The type Npc.
+ */
 public class Npc implements IPlayer {
 
     private String character;
