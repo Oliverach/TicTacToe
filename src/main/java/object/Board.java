@@ -4,7 +4,11 @@ package object;
  * The type Board.
  */
 public class Board {
-    private String[] board = new String[9];
+    private String[] board;
+
+    public Board(){
+        board = new String[9];
+    }
 
     /**
      * Display board.
